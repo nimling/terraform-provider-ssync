@@ -1,0 +1,22 @@
+name: Publish the ssync provider
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: the nimling/samna-sync release tag, v<version>
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    uses: nimling/nimbody/.github/workflows/terraform-provider.yml@main
+    with:
+      cli: ssync
+      repository: nimling/samna-sync
+      tag: ${{ inputs.tag }}
+    secrets:
+      repo_token: ${{ secrets.DOCKER_PACKAGE_READ }}
